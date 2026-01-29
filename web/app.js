@@ -633,6 +633,7 @@
 
   // ---------- Render ----------
   function renderGraph(payload, forcedView, forcedFocus) {
+    console.time("renderGraph.total");
     const view = inferView(payload, forcedView);
     const focus = safeStr(forcedFocus);
 
@@ -642,28 +643,55 @@
     setToolbar(view, focus);
 
     let g = normalizeGraphPayload(payload);
-    g = ensurePositionsHard(g, view);
+    const nodeCount = (g.nodes || []).length;
+    const edgeCount = (g.edges || []).length;
+    const denseGraph = nodeCount > 400 || edgeCount > 800;
+
+    // Layout choice: 若大量节点缺位则用同心蛛网布局，否则尊重后端坐标
+    const missingPos = (g.nodes || []).filter(n => !(n.position && typeof n.position.x === "number" && typeof n.position.y === "number")).length;
+    const needRadial = missingPos > (nodeCount * 0.2);
+
+    if (!needRadial) {
+      g = ensurePositionsHard(g, view);
+    }
     g.edges = filterEdgesByView(g, view);
 
     cy.batch(() => {
       cy.elements().remove();
-      cy.add(g.nodes);
-      cy.add(g.edges);
+      cy.add((g.nodes || []).map(n => { n.data = n.data || {}; n.data.weight = n.data.weight || 1; return n; }));
+      cy.add((g.edges || []).map(e => { e.data = e.data || {}; e.data.weight = e.data.weight || 1; return e; }));
     });
 
-    cy.layout({ name: "preset", fit: true, padding: 70, animate: false }).run();
+    if (needRadial) {
+      const center = cy.nodes().filter(n => n.data("kind") === "Category").first() || cy.nodes().first();
+      cy.layout({
+        name: "concentric",
+        animate: false,
+        concentric: n => (n.id() === center.id() ? 200 : 100 + (n.data("tier") ? 40 : 0)),
+        levelWidth: () => 40,
+        spacingFactor: 1.05,
+        padding: 60
+      }).run();
+    } else {
+      cy.layout({ name: "preset", fit: true, padding: 70, animate: false }).run();
+    }
     cy.fit(undefined, 80);
 
     // PERF: decide focus-edges based on edge count (only for non-Summary views)
-    const edgeCount = cy.edges().length;
     if (currentView !== "Summary" && edgeCount > PERF_EDGE_FOCUS_THRESHOLD) {
       perfEnableFocusEdges();
     } else {
       perfDisableFocusEdges();
     }
 
+    // Dense graph LOD:隐藏部分标签
+    if (denseGraph) {
+      cy.nodes().addClass("labelHidden");
+    }
+
     // Apply zoom-based LOD once after render
     perfUpdateZoomLOD();
+    console.timeEnd("renderGraph.total");
   }
 
   // ---------- Bridge integration ----------

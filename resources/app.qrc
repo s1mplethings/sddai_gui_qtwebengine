@@ -5,5 +5,11 @@
     <file alias="web/app.js">../web/app.js</file>
     <file alias="web/cytoscape.min.js">../web/cytoscape.min.js</file>
     <file alias="web/qwebchannel.js">../web/qwebchannel.js</file>
+    <file alias="web/graph_force/index.html">../web/graph_force/index.html</file>
+    <file alias="web/graph_force/graph.css">../web/graph_force/graph.css</file>
+    <file alias="web/graph_force/graph.js">../web/graph_force/graph.js</file>
+    <file alias="web/graph_force/force_sim.js">../web/graph_force/force_sim.js</file>
+    <file alias="web/graph_force/sample_graph.json">../web/graph_force/sample_graph.json</file>
   </qresource>
 </RCC>
+

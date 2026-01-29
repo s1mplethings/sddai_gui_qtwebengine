@@ -23,8 +23,16 @@ public:
   // Open native preview window for Markdown; fall back to OS default for other types.
   Q_INVOKABLE void openPath(const QString& relativePath);
 
+  // Generate AI Doc scaffold into target directory (docs/aidoc/*). Returns true on success.
+  Q_INVOKABLE bool generateAidoc(const QString& targetPath);
+
+  // Return simple graph JSON {nodes:[...], links:[...]} for force-canvas view.
+  Q_INVOKABLE QString getGraphJson() const;
+  Q_INVOKABLE void openNode(const QString& nodeJson);
+
 private:
   QString resolveSafePath(const QString& relativePath) const;
+  bool copyAidocTemplate(const QString& targetDir) const;
 
   Bridge* core_{nullptr};
   QString projectRoot_;

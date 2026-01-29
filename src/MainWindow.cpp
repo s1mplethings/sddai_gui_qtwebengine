@@ -77,6 +77,17 @@ void MainWindow::createMenu() {
         if (!root.isEmpty()) bridge_->openProject(root);
     });
 
+    auto genAidocAct = fileMenu->addAction(tr("Generate AI Doc..."));
+    connect(genAidocAct, &QAction::triggered, [this]() {
+        const QString dir = QFileDialog::getExistingDirectory(this, tr("Target Project"), QString());
+        if (dir.isEmpty()) return;
+        if (exposedBridge_ && exposedBridge_->generateAidoc(dir)) {
+            statusBar()->showMessage(tr("AI Doc scaffold generated: %1").arg(dir), 4000);
+        } else {
+            statusBar()->showMessage(tr("Generate AI Doc failed"), 5000);
+        }
+    });
+
     fileMenu->addSeparator();
     auto quitAct = fileMenu->addAction(tr("Quit"));
     quitAct->setShortcut(QKeySequence::Quit);

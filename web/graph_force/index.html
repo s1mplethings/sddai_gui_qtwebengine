@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graph Force</title>
+  <link rel="stylesheet" href="./graph.css" />
+</head>
+<body>
+  <div id="hud">
+    <div class="left">
+      <div class="title">Graph</div>
+      <div id="status" class="status">loading…</div>
+    </div>
+    <div class="right">
+      <input id="search" placeholder="search node…" />
+      <div id="sel" class="sel">selected: (none)</div>
+    </div>
+  </div>
+
+  <canvas id="c"></canvas>
+
+  <!-- Qt WebEngine 里可用 -->
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+
+  <script src="./force_sim.js"></script>
+  <script src="./graph.js"></script>
+</body>
+</html>

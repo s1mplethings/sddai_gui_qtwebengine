@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    { "id": "welcome", "label": "Welcome" },
+    { "id": "create_link", "label": "create a link" },
+    { "id": "main_character", "label": "main character" },
+    { "id": "course", "label": "选课推荐系统" }
+  ],
+  "links": [
+    { "source": "welcome", "target": "create_link" }
+  ]
+}

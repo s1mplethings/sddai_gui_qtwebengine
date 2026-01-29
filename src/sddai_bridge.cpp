@@ -10,6 +10,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QCoreApplication>
 #include <QUrl>
 
 SddaiBridge::SddaiBridge(Bridge* core, QObject* parent)
@@ -103,4 +104,40 @@ void SddaiBridge::openPath(const QString& relativePath) {
   }
 
   QDesktopServices::openUrl(QUrl::fromLocalFile(absPath));
+}
+
+
+bool SddaiBridge::copyAidocTemplate(const QString& targetDir) const {
+  const QString repoRoot = QDir(projectRoot_).isAbsolute() && !projectRoot_.isEmpty()
+      ? QDir(projectRoot_).absolutePath()
+      : QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("..");
+  const QString tplDir = QDir(repoRoot).absoluteFilePath("ai_context/templates/aidoc");
+  if (!QDir(tplDir).exists()) return false;
+
+  QDir dst(QDir(targetDir).absoluteFilePath("docs/aidoc"));
+  if (!dst.exists()) dst.mkpath(".");
+
+  const QStringList files = QDir(tplDir).entryList(QStringList() << "*.md", QDir::Files);
+  for (const QString& f : files) {
+    const QString srcPath = QDir(tplDir).absoluteFilePath(f);
+    const QString dstPath = dst.absoluteFilePath(f);
+    if (QFile::exists(dstPath)) {
+      QFile::remove(dstPath + ".bak");
+      QFile::copy(dstPath, dstPath + ".bak");
+    }
+    QFile::remove(dstPath);
+    if (!QFile::copy(srcPath, dstPath)) return false;
+  }
+  return true;
+}
+
+bool SddaiBridge::generateAidoc(const QString& targetPath) {
+  if (targetPath.isEmpty()) return false;
+  const QString abs = QDir(targetPath).absolutePath();
+  const QString rel = QDir(projectRoot_).relativeFilePath(abs);
+  if (!projectRoot_.isEmpty() && (rel.startsWith("..", Qt::CaseInsensitive) || QDir::isAbsolutePath(rel))) {
+    // 允许外部目录，但仍需是本地路径
+  }
+  const bool ok = copyAidocTemplate(abs);
+  return ok;
 }
