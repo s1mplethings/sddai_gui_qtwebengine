@@ -1,0 +1,22 @@
+{
+  "timestamp": "20260130_194423",
+  "repo_root": "D:\\.c_projects\\adc\\sddai_gui_qtwebengine",
+  "pass": true,
+  "suites": [
+    {
+      "id": "graph_spider",
+      "file": "specs\\graph_spider.checks.json",
+      "results": [
+        {
+          "name": "graph spider visual check (render + hover)",
+          "pass": true,
+          "returncode": 0,
+          "stdout": "[self_check] playwright chromium launched via msedge\n[PASS] render+hover ok | std=26.99 bright=66030 diff=7.10\n",
+          "stderr": "",
+          "seconds": 4.093027591705322,
+          "cmd": "python tools/checks/web_spider_visual_check.py --auto-entry --save-artifacts"
+        }
+      ]
+    }
+  ]
+}

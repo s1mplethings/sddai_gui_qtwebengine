@@ -1,0 +1,22 @@
+{
+  "timestamp": "20260130_175137",
+  "repo_root": "D:\\.c_projects\\adc\\sddai_gui_qtwebengine",
+  "pass": false,
+  "suites": [
+    {
+      "id": "graph_spider",
+      "file": "specs\\graph_spider.checks.json",
+      "results": [
+        {
+          "name": "graph spider visual check (render + hover)",
+          "pass": false,
+          "returncode": 2,
+          "stdout": "Playwright missing. Install: pip install -r requirements-dev.txt && python -m playwright install\n",
+          "stderr": "",
+          "seconds": 0.39299607276916504,
+          "cmd": "python tools/checks/web_spider_visual_check.py --auto-entry --save-artifacts"
+        }
+      ]
+    }
+  ]
+}

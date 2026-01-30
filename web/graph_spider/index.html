@@ -1,49 +1,64 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>SDDAI Spider Graph</title>
-  <link rel="stylesheet" href="./spider.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SDDAI Graph Spider</title>
   <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <link rel="stylesheet" href="./spider_v4.css" />
 </head>
 <body>
-  <div id="topbar">
+  <header id="topbar">
     <div class="left">
       <span class="badge">GRAPH</span>
       <span class="title">Spider Web</span>
-      <span class="hint">拖拽节点 / 滚轮缩放 / 空白处拖动画布 / 点击节点打开</span>
+      <span class="hint" id="hint">拖拽节点 / 滚轮缩放 / 空白拖画布 / 点击选中 / 双击或 Ctrl+点击打开</span>
     </div>
     <div class="right">
-      <input id="search" placeholder="搜索节点（名称/路径）…"/>
-      <button id="btnFit" title="自适应">Fit</button>
-      <button id="btnPause" title="暂停/继续仿真">Pause</button>
-      <button id="btnReheat" title="重新加热">Reheat</button>
+      <input id="search" placeholder="Search node / path..." autocomplete="off" />
+      <button id="btnBack" title="Back (Alt+← / Backspace)">Back</button>
+      <button id="btnForward" title="Forward (Alt+→)">Forward</button>
+      <button id="btnUp" title="Up (parent)">Up</button>
+      <button id="btnFit" title="Fit (Home)">Fit</button>
+      <button id="btnPause" title="Pause physics (Space)">Pause</button>
+      <button id="btnReheat" title="Reheat layout (R)">Reheat</button>
     </div>
-  </div>
+  </header>
 
   <div id="container">
     <canvas id="c"></canvas>
-    <div id="panel" class="panel hidden">
+
+    <div id="results" class="results hidden"></div>
+
+    <aside id="panel" class="panel hidden">
       <div class="panel-title" id="pTitle">Node</div>
       <div class="panel-sub" id="pSub"></div>
+
+      <div class="panel-actions">
+        <button id="btnOpen" title="Open (Enter / dblclick)">Open</button>
+        <button id="btnPin" title="Pin/Unpin selected node">Pin</button>
+        <button id="btnClose" title="Close (Esc)">Close</button>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Parent / Breadcrumb</div>
+        <div class="panel-bc" id="pBC"></div>
+      </div>
+
       <div class="panel-section">
         <div class="panel-section-title">Children / Neighbors</div>
         <div class="panel-list" id="pKids"></div>
       </div>
-      <div class="panel-actions">
-        <button id="btnOpen">Open</button>
-        <button id="btnPin">Pin</button>
-        <button id="btnClose">Close</button>
-      </div>
-      <div class="panel-meta" id="pMeta"></div>
-    </div>
 
-    <div id="results" class="results hidden"></div>
-    <div id="toast" class="toast hidden"></div>
+      <div class="panel-section">
+        <div class="panel-section-title">Meta</div>
+        <pre class="panel-meta" id="pMeta"></pre>
+      </div>
+    </aside>
+
+    <div id="toast" class="toast hidden">...</div>
   </div>
 
-  <script src="./bootstrap_graph.js"></script>
-  <script src="./spider.js"></script>
+  <script src="./spider_v4.js"></script>
 </body>
 </html>

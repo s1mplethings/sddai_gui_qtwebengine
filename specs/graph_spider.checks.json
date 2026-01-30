@@ -1,0 +1,10 @@
+{
+  "id": "graph_spider",
+  "checks": [
+    {
+      "name": "graph spider visual check (render + hover)",
+      "cmd": "python tools/checks/web_spider_visual_check.py --auto-entry --save-artifacts",
+      "timeout_sec": 180
+    }
+  ]
+}
