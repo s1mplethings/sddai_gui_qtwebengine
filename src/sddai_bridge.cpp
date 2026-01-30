@@ -86,6 +86,9 @@ void SddaiBridge::openPath(const QString& relativePath) {
   const QString absPath = resolveSafePath(relativePath);
   if (absPath.isEmpty()) return;
 
+  const QFileInfo fi(absPath);
+  if (!fi.exists()) return;
+
   if (sddaiIsMarkdown(absPath)) {
     QFile f(absPath);
     if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) return;

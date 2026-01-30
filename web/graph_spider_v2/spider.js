@@ -481,8 +481,8 @@
     }
     if(!hit.isGroup){
       focusOn(hit.id);
-      if(bridge && typeof bridge.openPath==="function"){
-        try{ await bridge.openPath(hit.path||hit.id); }catch(_){}}
+      if(bridge && typeof bridge.openPath==="function" && hit.path){
+        try{ await bridge.openPath(hit.path); }catch(_){}}
       else if(bridge && typeof bridge.openNode==="function"){
         try{ await bridge.openNode(JSON.stringify(hit)); }catch(_){}}
     }
@@ -546,3 +546,5 @@
     boot();
   }
 })();
+
+

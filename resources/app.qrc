@@ -4,8 +4,11 @@
     <file alias="web/app.js">../web/app.js</file>
     <file alias="web/cytoscape.min.js">../web/cytoscape.min.js</file>
     <file alias="web/qwebchannel.js">../web/qwebchannel.js</file>
+    <file alias="web/graph_force/index.html">../web/graph_force/index.html</file>
+    <file alias="web/graph_force/README.md">../web/graph_force/README.md</file>
     <file alias="web/graph_spider/index.html">../web/graph_spider/index.html</file>
     <file alias="web/graph_spider/spider.css">../web/graph_spider/spider.css</file>
+    <file alias="web/graph_spider/bootstrap_graph.js">../web/graph_spider/bootstrap_graph.js</file>
     <file alias="web/graph_spider/spider.js">../web/graph_spider/spider.js</file>
     <file alias="web/graph_spider/demo_graph.json">../web/graph_spider/demo_graph.json</file>
     <file alias="web/graph_spider_v2/index.html">../web/graph_spider_v2/index.html</file>
