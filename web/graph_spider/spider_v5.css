@@ -1,0 +1,181 @@
+:root{
+  --bg:#0b1020;
+  --bg2:#0f1730;
+  --fg:#e6e6e6;
+  --muted:#9aa4b2;
+  --line:rgba(180,200,255,.14);
+  --lineHi:rgba(240,250,255,.90);
+  --node:rgba(220,230,255,.85);
+  --nodeSel:rgba(255,255,255,.95);
+  --accent:#7dd3fc;
+  --panel:#0f162c;
+  --panel2:#0d1326;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  overflow:hidden;
+}
+
+#app{
+  height:100%;
+  display:flex;
+}
+
+#canvasWrap{
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  background:radial-gradient(1200px 800px at 40% 35%, rgba(125,211,252,.10), transparent 60%),
+             radial-gradient(900px 700px at 70% 55%, rgba(160,130,255,.07), transparent 65%),
+             linear-gradient(180deg, var(--bg), var(--bg2));
+}
+
+#c{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+#topbar{
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  pointer-events:none;
+}
+
+#crumb{
+  pointer-events:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  color:var(--muted);
+  font-size:13px;
+  user-select:none;
+  max-width:70%;
+}
+
+.crumbItem{
+  padding:4px 10px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.18);
+  border-radius:999px;
+}
+
+#actions{
+  pointer-events:auto;
+  display:flex;
+  gap:8px;
+}
+
+#actions button{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:var(--fg);
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+#actions button:hover{
+  border-color:rgba(125,211,252,.55);
+  box-shadow: 0 0 0 3px rgba(125,211,252,.12);
+}
+
+#hint{
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:12px;
+  color:rgba(230,230,230,.75);
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.10);
+  padding:8px 10px;
+  border-radius:12px;
+  user-select:none;
+}
+
+#hint span{ white-space:nowrap; }
+
+/* panel is docked (no overlay), default hidden */
+#panel{
+  width:360px;
+  flex:0 0 360px;
+  background:linear-gradient(180deg, var(--panel), var(--panel2));
+  border-left:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+}
+#panel.hidden{ display:none; }
+
+.panelHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 12px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.panelTitle{ font-weight:650; color:rgba(255,255,255,.92); }
+
+#btnClosePanel{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:var(--fg);
+  border-radius:10px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+#btnClosePanel:hover{
+  border-color:rgba(125,211,252,.55);
+  box-shadow: 0 0 0 3px rgba(125,211,252,.12);
+}
+
+#panelBody{
+  padding:12px 12px 18px;
+  overflow:auto;
+  height:calc(100% - 54px);
+  font-size:13px;
+  color:rgba(230,230,230,.88);
+}
+
+.kv{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.18);
+  border-radius:12px;
+  padding:10px 10px;
+  margin-bottom:10px;
+}
+.k{ color:rgba(255,255,255,.72); font-size:12px; margin-bottom:6px; }
+.v{
+  color:rgba(255,255,255,.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.16);
+  color:rgba(255,255,255,.86);
+  font-size:12px;
+  margin-right:6px;
+  margin-bottom:6px;
+}

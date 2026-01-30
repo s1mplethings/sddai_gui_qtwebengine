@@ -13,6 +13,8 @@
     <file alias="web/graph_spider/demo_graph.json">../web/graph_spider/demo_graph.json</file>
     <file alias="web/graph_spider/spider_v4.css">../web/graph_spider/spider_v4.css</file>
     <file alias="web/graph_spider/spider_v4.js">../web/graph_spider/spider_v4.js</file>
+    <file alias="web/graph_spider/spider_v5.css">../web/graph_spider/spider_v5.css</file>
+    <file alias="web/graph_spider/spider_v5.js">../web/graph_spider/spider_v5.js</file>
     <file alias="web/graph_spider_v2/index.html">../web/graph_spider_v2/index.html</file>
     <file alias="web/graph_spider_v2/graph.css">../web/graph_spider_v2/graph.css</file>
     <file alias="web/graph_spider_v2/spider.js">../web/graph_spider_v2/spider.js</file>

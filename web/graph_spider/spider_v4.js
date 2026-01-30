@@ -18,7 +18,7 @@ E*=.985;if(E<.02)E=.02}
 function pick(sx,sy){const p=SW(sx,sy);const r=12/v.k;let best=null,bd=1e18;for(const n of nodes){const dx=n.x-p.x,dy=n.y-p.y;const d2=dx*dx+dy*dy;const rr=n.r+r;if(d2<rr*rr&&d2<bd){best=n;bd=d2}}return best}
 function fit(pad=80){if(!nodes.length)return;let minx=1e18,miny=1e18,maxx=-1e18,maxy=-1e18;for(const n of nodes){minx=Math.min(minx,n.x);miny=Math.min(miny,n.y);maxx=Math.max(maxx,n.x);maxy=Math.max(maxy,n.y)}const w=c.width,h=c.height;const gw=Math.max(1,maxx-minx),gh=Math.max(1,maxy-miny);const k=Math.min((w-pad*d)/gw,(h-pad*d)/gh);v.k=Math.max(.22*d,Math.min(2.6*d,k));const cx=(minx+maxx)*.5,cy=(miny+maxy)*.5;v.x=w*.5-cx*v.k;v.y=h*.5-cy*v.k}
 function focus(id,{push=true,anim=true}={}){const n=by.get(String(id));if(!n)return;sel=n.id;if(push)pushH(n.id);E=1;panel(n);if(!anim)return;const w=c.width,h=c.height;const tx=w*.5-n.x*v.k,ty=h*.5-n.y*v.k;const steps=14,sx=v.x,sy=v.y;let t=0;(function A(){t++;const a=t/steps;const e=a<1?(1-Math.pow(1-a,3)):1;v.x=sx+(tx-sx)*e;v.y=sy+(ty-sy)*e;if(t<steps)requestAnimationFrame(A)})()}
-function item(n,sub){const el=document.createElement('div');el.className='panel-item';const t=document.createElement('div');t.className='panel-item-title';t.textContent=n.label||n.id;const s=document.createElement('div');s.className='panel-item-sub';s.textContent=sub||n.path||n.group||n.id;el.appendChild(t);el.appendChild(s);el.addEventListener('click',()=>focus(n.id,{push:true,anim:true}));return el}
+function item(n,sub){const el=document.createElement('div');el.className='panel-item';const t=document.createElement('div');t.className='panel-item-title';t.textContent=n.label||n.id;const s=document.createElement('div');s.className='panel-item-sub';s.textContent=sub||n.path||n.group||n.id;el.appendChild(t);el.appendChild(s);el.addEventListener('mouseenter',()=>{hover=n.id;draw();});el.addEventListener('mouseleave',()=>{hover=null;draw();});el.addEventListener('click',()=>focus(n.id,{push:true,anim:true}));el.addEventListener('dblclick',(e)=>{e.stopPropagation();openNode(n.id);});return el}
 function bc(n){ui.pBC.innerHTML='';const p=normPath(n.path);if(!p)return;const baseP=isDir(p)?(p.endsWith('/')?p:p+'/'):dirOf(p);if(!baseP)return;const root=document.createElement('div');root.className='bc-item';root.textContent='/';root.addEventListener('click',()=>{fit();T('Fit')});ui.pBC.appendChild(root);const parts=baseP.split('/').filter(Boolean);let cur='';for(const part of parts){cur+=part+'/';const id=`dir:${cur}`;const dn=by.get(id);const el=document.createElement('div');el.className='bc-item';el.textContent=part;el.addEventListener('click',()=>{if(dn)focus(dn.id,{push:true,anim:true});else T('No dir node')});ui.pBC.appendChild(el)}}
 function neigh(n){const res=[];const o=out.get(n.id);if(o&&o.size)for(const id of o){const m=by.get(id);if(m)res.push(m)}if(!res.length){const a=adj.get(n.id);if(a&&a.size)for(const id of a){const m=by.get(id);if(m)res.push(m)}}if(!res.length&&isDir(n.path)){const p0=normPath(n.path).replace(/\/+$/,'')+'/';for(const m of nodes){const pp=normPath(m.path);if(!pp||m.id===n.id)continue;if(!pp.startsWith(p0))continue;const rest=pp.slice(p0.length);if(rest&&rest.indexOf('/')===-1)res.push(m);if(res.length>=120)break}}
 res.sort((a,b)=>(b.importance||0)-(a.importance||0));return res.slice(0,120)}
@@ -36,9 +36,27 @@ function draw(){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0b0f14';x.fillRect(0,0
 function tick(){forces();draw();requestAnimationFrame(tick)}requestAnimationFrame(tick);
 function results(list){ui.results.innerHTML='';if(!list.length){ui.results.classList.add('hidden');return}ui.results.classList.remove('hidden');for(const n of list){const el=document.createElement('div');el.className='result-item';const t=document.createElement('div');t.className='result-title';t.textContent=n.label||n.id;const s=document.createElement('div');s.className='result-sub';s.textContent=n.path||n.group||n.id;el.appendChild(t);el.appendChild(s);el.addEventListener('click',()=>{ui.results.classList.add('hidden');ui.search.value='';focus(n.id,{push:true,anim:true})});ui.results.appendChild(el)}}
 ui.search.addEventListener('input',()=>{const q=ui.search.value.trim().toLowerCase();if(!q){results([]);return}const hits=[];for(const n of nodes){const hay=(String(n.label)+' '+String(n.path)+' '+String(n.id)).toLowerCase();if(hay.includes(q))hits.push(n);if(hits.length>=120)break}results(hits)});document.addEventListener('pointerdown',(e)=>{if(e.target===ui.search||ui.results.contains(e.target))return;ui.results.classList.add('hidden')});
+c.addEventListener('dblclick',(e)=>{if(!sel)return;openNode(sel);});
 c.addEventListener('pointerdown',(e)=>{c.setPointerCapture(e.pointerId);moved=false;last={x:e.clientX,y:e.clientY};const n=pick(e.clientX,e.clientY);if(n){dragN=n;dragS=SW(e.clientX,e.clientY);n.fx=n.x;n.fy=n.y}else{dragC=true;viewS={x:v.x,y:v.y};dragS={x:e.clientX,y:e.clientY}}});
 c.addEventListener('pointermove',(e)=>{const dx=e.clientX-last.x,dy=e.clientY-last.y;if(Math.abs(dx)+Math.abs(dy)>2)moved=true;last={x:e.clientX,y:e.clientY};if(dragN){const p=SW(e.clientX,e.clientY);dragN.fx=p.x;dragN.fy=p.y;E=1;return}if(dragC){v.x=viewS.x+(e.clientX-dragS.x)*d;v.y=viewS.y+(e.clientY-dragS.y)*d;return}const n=pick(e.clientX,e.clientY);hover=n?n.id:null});
-c.addEventListener('pointerup',(e)=>{dragC=false;if(dragN){if(!e.shiftKey){dragN.fx=null;dragN.fy=null}}dragN=null;if(moved)return;const n=pick(e.clientX,e.clientY);if(!n)return;const now=Date.now();const dbl=lastD.id===n.id&&(now-lastD.t)<320;lastD={id:n.id,t:now};focus(n.id,{push:true,anim:true});if(dbl||e.ctrlKey)openNode(n.id)});
+c.addEventListener('pointerup',(e)=>{
+  dragC=false;
+  if(dragN){
+    if(!e.shiftKey){dragN.fx=null;dragN.fy=null}
+  }
+  dragN=null;
+  if(moved) return;
+  const n=pick(e.clientX,e.clientY);
+  if(!n){
+    // click blank: clear selection and hide panel
+    sel=null; hover=null; ui.panel.classList.add('hidden'); draw(); return;
+  }
+  const now=Date.now();
+  const dbl=lastD.id===n.id&&(now-lastD.t)<320;
+  lastD={id:n.id,t:now};
+  focus(n.id,{push:true,anim:true});
+  if(dbl||e.ctrlKey) openNode(n.id);
+});
 c.addEventListener('wheel',(e)=>{e.preventDefault();const p=SW(e.clientX,e.clientY);const f=Math.exp(-e.deltaY*.0018);const k0=v.k;const k1=Math.max(.18*d,Math.min(5*d,k0*f));v.k=k1;v.x=v.x+(p.x*k0-p.x*k1);v.y=v.y+(p.y*k0-p.y*k1)},{passive:false});
 ui.btnFit.addEventListener('click',()=>{fit();T('Fit')});ui.btnPause.addEventListener('click',()=>{run=!run;ui.btnPause.textContent=run?'Pause':'Resume';T(run?'Running':'Paused')});ui.btnReheat.addEventListener('click',()=>{E=1;T('Reheat')});ui.btnOpen.addEventListener('click',()=>{if(sel)openNode(sel)});ui.btnPin.addEventListener('click',()=>{const n=by.get(String(sel));if(!n)return;if(n.fx==null&&n.fy==null){n.fx=n.x;n.fy=n.y;T('Pinned')}else{n.fx=null;n.fy=null;T('Unpinned')}});ui.btnClose.addEventListener('click',()=>ui.panel.classList.add('hidden'));ui.btnBack.addEventListener('click',back);ui.btnForward.addEventListener('click',forward);ui.btnUp.addEventListener('click',up);navBtns();
 window.addEventListener('keydown',(e)=>{const a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'))return;if(e.key===' '){e.preventDefault();ui.btnPause.click();return}if(e.key==='Escape'){ui.panel.classList.add('hidden');return}if(e.key==='Enter'){if(sel)openNode(sel);return}if(e.key==='Home'){fit();return}if(e.key==='Backspace'){back();return}if(e.altKey&&e.key==='ArrowLeft'){back();return}if(e.altKey&&e.key==='ArrowRight'){forward();return}if(e.key==='r'||e.key==='R'){E=1;return}if(e.key==='u'||e.key==='U'){up();return}});
@@ -50,3 +68,4 @@ T('Bridge connected')});return true}catch(e){console.warn('[SDDAI] QWebChannel i
 async function demo(){try{const r=await fetch('./demo_graph.json',{cache:'no-store'});const g=await r.json();setGraph(g)}catch(e){console.warn('[SDDAI] demo_graph.json failed, using bootstrap',e);setGraph({nodes:[{id:'README',label:'README.md',path:'README.md',tier:'P0'},{id:'specs',label:'specs/',path:'specs/',tier:'P1'},{id:'tasks',label:'tasks.md',path:'tasks.md',tier:'P1'},{id:'runbook',label:'runbook.md',path:'runbook.md',tier:'P2'}],links:[{source:'README',target:'specs'},{source:'README',target:'tasks'},{source:'specs',target:'runbook'}]})}}
 window.SDDAI_GRAPH={setData:(g)=>setGraph(g),setJson:(j)=>setGraph(JSON.parse(j)),focus:(id)=>focus(id,{push:true,anim:true}),fit:()=>fit(),back:()=>back(),forward:()=>forward(),up:()=>up()};
 if(!tryBridge())demo();})();
+
