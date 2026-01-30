@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    { "id": "ai/AGENT_PROTOCOL.md", "label": "AGENT_PROTOCOL", "path": "ai/AGENT_PROTOCOL.md" },
+    { "id": "ai/PLAYBOOK.md", "label": "PLAYBOOK", "path": "ai/PLAYBOOK.md" },
+    { "id": "scripts/ai_apply/cli.py", "label": "cli.py", "path": "scripts/ai_apply/cli.py" },
+    { "id": "web/graph_spider_v2/index.html", "label": "Spider V2", "path": "web/graph_spider_v2/index.html" },
+    { "id": "src/mainwindow.cpp", "label": "MainWindow", "path": "src/mainwindow.cpp" },
+    { "id": "src/bridge/graphbridge.cpp", "label": "GraphBridge", "path": "src/bridge/graphbridge.cpp" },
+    { "id": "docs/00_overview.md", "label": "overview", "path": "docs/00_overview.md" },
+    { "id": "specs/graph.md", "label": "graph spec", "path": "specs/graph.md" }
+  ],
+  "links": [
+    { "source": "ai/PLAYBOOK.md", "target": "ai/AGENT_PROTOCOL.md" },
+    { "source": "scripts/ai_apply/cli.py", "target": "ai/AGENT_PROTOCOL.md" },
+    { "source": "web/graph_spider_v2/index.html", "target": "ai/PLAYBOOK.md" },
+    { "source": "src/mainwindow.cpp", "target": "src/bridge/graphbridge.cpp" },
+    { "source": "src/bridge/graphbridge.cpp", "target": "web/graph_spider_v2/index.html" },
+    { "source": "docs/00_overview.md", "target": "ai/PLAYBOOK.md" },
+    { "source": "specs/graph.md", "target": "ai/PLAYBOOK.md" }
+  ]
+}

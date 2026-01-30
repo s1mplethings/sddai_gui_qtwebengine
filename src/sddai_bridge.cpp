@@ -144,15 +144,16 @@ bool SddaiBridge::generateAidoc(const QString& targetPath) {
 
 
 QString SddaiBridge::getGraphJson() const {
-  // 优先复用核心桥接生成的 Summary 视图，如果为空则返回极简示例
+  // 优先复用核心桥接生成的 Summary 视图；如为空则返回内置 demo graph。
   if (core_) {
     const QString json = core_->requestGraph(QStringLiteral("Summary"), QString());
     if (!json.isEmpty()) return json;
   }
-  return QString::fromUtf8(R"({
-    "nodes": [ { "id": "welcome", "label": "Welcome" } ],
-    "links": [ ]
-  })");
+  QFile demo(QStringLiteral(":/web/graph_spider/demo_graph.json"));
+  if (demo.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    return QString::fromUtf8(demo.readAll());
+  }
+  return QString();
 }
 
 void SddaiBridge::openNode(const QString& nodeJson) {

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spider Graph V2</title>
+  <link rel="stylesheet" href="./graph.css" />
+</head>
+<body>
+  <div id="hud">
+    <div class="left">
+      <div class="title">Spider Graph</div>
+      <div id="status" class="status">loading…</div>
+      <div id="crumb" class="crumb"></div>
+    </div>
+    <div class="right">
+      <input id="search" placeholder="search node…" />
+      <div class="row">
+        <button id="btnOverview" class="btn">Overview</button>
+        <button id="btnFocus" class="btn">Focus</button>
+        <button id="btnReset" class="btn">Reset</button>
+      </div>
+      <div id="sel" class="sel">selected: (none)</div>
+    </div>
+  </div>
+
+  <canvas id="c"></canvas>
+
+  <!-- Qt WebEngine (optional) -->
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <script src="./spider.js"></script>
+</body>
+</html>

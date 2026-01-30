@@ -58,7 +58,7 @@ void MainWindow::createUi() {
     auto channel = new QWebChannel(webView_);
     channel->registerObject(QStringLiteral("bridge"), exposedBridge_);
     webView_->page()->setWebChannel(channel);
-    webView_->setUrl(QUrl(QStringLiteral("qrc:/web/index.html")));
+    webView_->setUrl(QUrl(QStringLiteral("qrc:/web/graph_spider_v2/index.html")));
 
     statusBar()->showMessage(QStringLiteral("Ready"));
     projectLabel_ = new QLabel(tr("No project loaded"), this);

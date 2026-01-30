@@ -8,5 +8,9 @@
     <file alias="web/graph_spider/spider.css">../web/graph_spider/spider.css</file>
     <file alias="web/graph_spider/spider.js">../web/graph_spider/spider.js</file>
     <file alias="web/graph_spider/demo_graph.json">../web/graph_spider/demo_graph.json</file>
+    <file alias="web/graph_spider_v2/index.html">../web/graph_spider_v2/index.html</file>
+    <file alias="web/graph_spider_v2/graph.css">../web/graph_spider_v2/graph.css</file>
+    <file alias="web/graph_spider_v2/spider.js">../web/graph_spider_v2/spider.js</file>
+    <file alias="web/graph_spider_v2/sample_graph.json">../web/graph_spider_v2/sample_graph.json</file>
   </qresource>
 </RCC>
