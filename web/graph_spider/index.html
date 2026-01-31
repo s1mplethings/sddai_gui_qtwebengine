@@ -22,15 +22,20 @@
       <button id="btnFit" title="Fit (Home)">Fit</button>
       <button id="btnPause" title="Pause physics (Space)">Pause</button>
       <button id="btnReheat" title="Reheat layout (R)">Reheat</button>
+      <button id="btnTogglePanel" title="Toggle Details (Ctrl+\\)">Details</button>
     </div>
   </div>
 
   <div id="container">
-    <canvas id="c"></canvas>
+    <div id="graphPane">
+      <canvas id="c"></canvas>
+      <div id="results" class="results hidden"></div>
+      <div id="toast" class="toast hidden">...</div>
+    </div>
 
-    <div id="results" class="results hidden"></div>
+    <div id="panelResizer" title="Drag to resize"></div>
 
-    <aside id="panel" class="panel hidden">
+    <aside id="panel" class="panel">
       <div class="panel-title" id="pTitle">Node</div>
       <div class="panel-sub" id="pSub"></div>
 
@@ -50,13 +55,19 @@
         <div class="panel-list" id="pKids"></div>
       </div>
 
+      <div class="panel-section" id="pPreviewSection">
+        <div class="panel-section-title">Preview</div>
+        <div id="pPreview" class="panel-preview hidden">
+          <img id="pImg" alt="preview" />
+          <canvas id="pOverlay"></canvas>
+        </div>
+      </div>
+
       <div class="panel-section">
         <div class="panel-section-title">Meta</div>
         <pre class="panel-meta" id="pMeta"></pre>
       </div>
     </aside>
-
-    <div id="toast" class="toast hidden">...</div>
   </div>
 
   <script src="./spider_v4.js"></script>
