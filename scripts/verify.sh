@@ -14,4 +14,7 @@ echo "[verify] integration tests (placeholder)"
 echo "[verify] contract checks"
 python3 scripts/contract_checks.py
 
+echo "[verify] sync doc links (check mode)"
+python3 scripts/sync_doc_links.py --check
+
 echo "[verify] done"

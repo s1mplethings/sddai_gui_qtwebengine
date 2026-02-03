@@ -15,7 +15,17 @@
       <span class="hint">拖拽节点 / 滚轮缩放 / 空白拖动画布 / 单击选中 / 双击或 Ctrl+点击打开</span>
     </div>
     <div class="right">
+      <select id="viewSel" title="Select View">
+        <option value="All">All</option>
+        <option value="Pipeline">Pipeline</option>
+        <option value="Docs">Docs</option>
+        <option value="Summary">Summary</option>
+      </select>
+      <label><input id="collapseToggle" type="checkbox" checked title="Collapse directories"/>Collapse Dirs</label>
+      <label>Depth: <input id="depth" type="number" min="1" max="6" value="2" style="width:50px" title="Focus expand depth"/></label>
       <input id="search" placeholder="Search node / path..." autocomplete="off" />
+      <button id="btnOverview" title="Overview (全局图)">Overview</button>
+      <button id="btnFocus" title="Focus on Selected">Focus</button>
       <button id="btnBack" title="Back (Alt+← / Backspace)">Back</button>
       <button id="btnForward" title="Forward (Alt+→)">Forward</button>
       <button id="btnUp" title="Up (parent)">Up</button>
@@ -42,6 +52,11 @@
       <div class="panel-actions">
         <button id="btnOpen" title="Open (Enter / dblclick)">Open</button>
         <button id="btnPin" title="Pin/Unpin selected node">Pin</button>
+        <button id="btnToggleExpand" title="Toggle expand/collapse directory" style="display:none">Toggle Expand</button>
+        <button id="btnDrillDown" title="Drill down to directory" style="display:none">Drill Down</button>
+        <button id="btnStartLink" title="Start linking docs">Start Link</button>
+        <button id="btnLinkTo" title="Link to selected">Link To</button>
+        <button id="btnUnlink" title="Remove link">Unlink</button>
         <button id="btnClose" title="Close (Esc)">Close</button>
       </div>
 

@@ -48,11 +48,31 @@ html,body{
   padding:8px 10px;
   border-radius:10px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,.04);
+  background:rgba(15,23,34,.85);
   color:var(--fg);
   outline:none;
 }
 #search:focus{border-color:rgba(112,255,210,.35); box-shadow:0 0 0 3px rgba(112,255,210,.10)}
+
+select, input[type="number"], input[type="text"] {
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:rgba(15,23,34,.85);
+  color:var(--fg);
+  outline:none;
+  font-family:inherit;
+  font-size:13px;
+}
+select:focus, input[type="number"]:focus, input[type="text"]:focus {
+  border-color:rgba(112,255,210,.35);
+  box-shadow:0 0 0 2px rgba(112,255,210,.10);
+}
+select option {
+  background:rgba(15,23,34,.95);
+  color:var(--fg);
+}
+
 button{
   padding:8px 10px;
   border-radius:10px;

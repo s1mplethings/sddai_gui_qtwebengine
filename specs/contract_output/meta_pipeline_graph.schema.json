@@ -130,7 +130,8 @@
             "enum": [
               "produces",
               "consumes",
-              "verifies"
+              "verifies",
+              "docs_link"
             ]
           },
           "label": {

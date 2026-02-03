@@ -149,7 +149,7 @@ bool SddaiBridge::generateAidoc(const QString& targetPath) {
 QString SddaiBridge::getGraphJson() const {
   // 优先复用核心桥接生成的 Summary 视图；如为空则返回内置 demo graph。
   if (core_) {
-    const QString json = core_->requestGraph(QStringLiteral("Summary"), QString());
+    const QString json = core_->requestGraph(QStringLiteral("Pipeline"), QString());
     if (!json.isEmpty()) return json;
   }
   QFile demo(QStringLiteral(":/web/graph_spider/demo_graph.json"));

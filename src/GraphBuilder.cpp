@@ -176,7 +176,7 @@ Graph GraphBuilder::build(const ProjectLayout &layout,
         e.type = me.type;
         e.label = me.label;
         e.confidence = QStringLiteral("manual");
-        e.view = QStringLiteral("Pipeline");
+        e.view = (me.type == QStringLiteral("docs_link")) ? QStringLiteral("Docs") : QStringLiteral("Pipeline");
         addEdge(e);
     }
 
